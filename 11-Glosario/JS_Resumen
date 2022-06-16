@@ -1,0 +1,418 @@
+Javascript basico
+
+### Variables
+Almacena un valor o algo para usar mas tarde
+
+## var
+Declara una variable (var = 5)
+
+## let
+Similar a var pero con diferente comportamiento
+
+## const
+Variable que no se puede cambiar (const = “no puedo cambiar esto”)
+
+### console.log
+Nos deja imprimir en la consola todo lo que este en el parentesis (console.log() )
+
+### Tipos de datos
+
+Strings = cadenas de texto (car nombre = “lucas”)
+Numbers = Numeros, pueden ser negativos (var edad_lucas = 20)
+booleans = Puede ser 0 o 1, verdadero o falso (var esta_en_corrientes = true)
+
+## Operadores
+
+‘+’ = Suma	/	`-` = resta	/	‘*’ = multiplicacion		/	‘/’ = division
+‘%’ = Modulo (devuelve resto)
+
+var suma = 5 + 5 // 10
+var division = 10 / 2 // 5
+
+## Math
+
+Math.pow(a, b) = potencia de dos numeros
+Math.round(6.5) = Redondea
+Math.floor(6,999) // 6 = redondea al numero entero mas cercano hacia abajo
+Math.ceil(6,0001) // 7 = redondea para arriba
+
+## .lenght
+Cantidad de caracteres de un string
+
+##Funciones
+Se pueden armar de estas formas:
+
+function miFuncion() {}
+
+var otraFuncion = function() {};
+
+var otraFuncionMas = () => {}
+## Argumentos
+
+Darle un dato a una funcion para que lo utilice en el codigo a ejecutar
+
+funtion miFuncion(nombre, apellido, edad){
+	console.log(“mi nombre es ” + nombre + “ y mi apellido es “ + apellido + “, y tengo “ + edad +“ años”);
+}
+
+return = devuelbe datos de una funcion
+
+### Undefined y null
+Estos no encajan en ningun tipo de dato.
+
+Undefined: Cuando busques algo que no existe, ejemplo variable que no tiene valor todavia
+
+Null: Es cuando el objeto que se esta buscando existe pero no hay ningun valor asociado a el. 
+Este esta configurado por nosotros mismos (programador) (var numero_telefono = null)
+
+### Veracidad
+
+Cuando JS tranforma algo en un valor boleano, como algo dentro de una condicion if o otros valores
+## Trues
+true
+1
+‘ ‘
+[]
+{}
+function () {}
+
+## Falses
+false
+0
+undefined
+null
+‘’ → cadena vacia
+
+### Operaciones de comparacion
+
+>		Mayor a
+<		Menor a
+>=		Mayor igual a
+<=		Menor igual a
+=== 		Igual a (teniendo en cuenta el tipo)	( 1 === “1” // falso)
+==		Igual a (solamente el valor)		( 1 == “1” // vverdadero)
+!== 		No es igual a
+
+
+### Operadores Logicos
+
+&& →AND
+|| → OR
+! → NOT
+
+### Bucle FOR
+
+for( var i = 0; i < 10; i++){}
+
+### arguments
+
+La propiedad arguments, contiene los parametros pasados como argumentos y este no es un array
+
+### Switch
+
+switch(expresion)
+	case valor1:
+		//Codigo
+		break;
+	default:
+		//codigo
+		break;
+
+### While
+
+while (condicion) {
+	//codigo
+}
+
+### Do While
+
+do {
+	//codigo
+      }While (condicion)
+
+### Arrays
+
+## Crear un array
+var unArray = [];
+
+## Añadir elemento al final:
+unArray.push(elemento);
+
+## Eliminar ultimo elemento:
+unArray.pop(elemento);
+
+## Añadir un elemento al principio de un array:
+unArray.unshift(elemento); // movera a un costado el resto de elementos
+## Eliminar el primer elemento de un Array:
+unArray.shift(elemento); // Se reacomodaran el resto de elementos
+
+## Encontrar el indice de un elemento en el array
+var pos = unArray.indexOf(elemento) // retornara la poscision numerica
+
+##.Foreach
+`.forEach` es un bucle for integrado en cada array. `.forEach` toma un callback como su único argumento, e itera sobre cada elemento de la matriz y 
+llama al callback en él. El callback puede tomar dos argumentos, el primero es el elemento en sí, el segundo es el índice del elemento (este argumento es opcional).
+
+const autos = ["Ford", "Chevrolet", "Toyota", "Tesla"];
+
+// Podemos escribir el callback en los paréntesis como una función anónima
+autos.forEach(function (elemento, indice) {
+  console.log(elemento);
+});
+
+// O podemos crear una instancia de una función para usarla como callback.
+// Además, no necesitamos usar el argumento de índice, si no lo necesitas, no dudes en omitirlo.
+function mostrarNombres(elemento) {
+  console.log(elemento);
+}
+
+// And call that function in the forEach parentheses
+autos.forEach(mostrarNombres);
+
+### **.reduce**
+
+`.reduce` ejecutará un bucle en nuestra matriz con la intención de reducir cada elemento en un elemento que se devuelve. 
+Como es el primer argumento, acepta un callback que toma dos argumentos, primero un 'acumulador' (el resultado del método de reducción hasta ahora), 
+y el segundo es el elemento en el que se encuentra actualmente. El callback debe contener siempre una declaración de devolución ("return"). 
+`.reduce` también toma un segundo argumento opcional, que sería el acumulador de arranque ("starting accumulator"). 
+Si no se suministra el acumulador de arranque, la reducción comenzará en el primer elemento de la matriz. 
+`.reduce` siempre devolverá el acumulador cuando termine de recorrer los elementos.
+
+```javascript
+const numeros = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+const palabras = ["Hola,", "mi", "nombre", "es", "Martin"];
+
+// Podemos escribir la función anónima directamente en los paréntesis de .reduce
+// Si omitimos el elemento inicial, siempre comenzará en el primer elemento.
+const suma = numeros.reduce(function (acc, elemento) {
+  return acc + elemento;
+});
+
+// Podemos escribir una función fuera de los parents de .reduce (para usar varias veces más tarde)
+function multiplicarDosNumeros(a, b) {
+  return a * b;
+}
+
+const productos = numeros.reduce(multiplicarDosNumeros);
+
+// .reduce funciona en cualquier tipo de datos.
+// En este ejemplo configuramos un acumulador de arranque
+const frases = palabras.reduce(function (acc, elemento) {
+  return acc + " " + elemento;
+}, "Frase completa:");
+
+console.log(suma); // 45
+console.log(productos); // 362880
+console.log(frases); // "Frase completa: Hola, mi nombre es Martin"
+```
+
+### **.map**
+
+`.map` se usa cuando queremos cambiar cada elemento de una matriz de la misma manera. `.map` toma una devolución de llamada como único argumento.
+ Al igual que el método `.forEach`, el callback tiene el elemento y el índice de argumentos opcionales. A diferencia de `.reduce`, `.map` devolverá toda la matriz.
+
+```javascript
+const numeros = [2, 3, 4, 5];
+
+function multiplicarPorTres(elemento) {
+  return elemento * 3;
+}
+
+const doble = numeros.map(function (elemento) {
+  return elemento * 2;
+});
+
+const triple = numeros.map(multiplicarPorTres);
+
+console.log(doble); // [ 4, 6, 8, 10 ]
+console.log(triple); // [ 6, 9, 12, 15 ]
+
+### Objetos
+
+Estos son contenedroes de datos.
+
+Const nuevoObjeto = {};
+
+## Pares Claves: Valor
+
+La clave es el identificador y el valor es el valor que queremos guardar en esa clave. 
+Los objetos pueden tener muchas pares claves-valor y deben estar separados por coma (no punto y coma) la calve es unica para el objeto pero pueden haber 
+varias claves con el mismo valor. Los valores pueden ser de cualquier tipo. Ejemplo:
+
+cons miObjeto {
+	username: “lucas.macchi”,
+	contraseña: 78956,
+	esPremiun: true.
+	Tiempoinscripto: 45
+};
+
+## Acceder a los valores
+
+miObjeto.esPremiun; // devuelve true
+miObjeto.username; // devuelve “lucas.macchi”
+
+Tambien se puede usar corchetes como si fuera una matriz que este apuntando a una cadena o numero:
+const contra = “contraseña”;
+miObjeto[‘esPremiun’]; //true
+miObjeto[contra]; // 78926
+
+## Asignacion de Valores
+
+Es lo mismo que acceder los valores pero lo igualas a otro valor
+
+miObjeto.username = “lucas.benjamin.macchi” //cambio de usuario 
+
+
+
+## Eliminar una propiedad
+Usamos la palabra clave delete
+
+delete miObjeto.Tiempoinscripto // se elimna el tiempo inscripto
+
+Es mejor practica establecer como undefined
+
+## Metodos
+
+Funciones guardades dentro de un objeto son metodos. Y se llaman con nombreDeObjeto.Metodo
+
+cons miObjeto {
+	username: “lucas.macchi”,
+	contraseña: 78956,
+	esPremiun: true.
+	
+
+	miMetodo: function() { console.log("Ese es mi metodo") }
+};
+miObjeto.miMetodo() // Ese es mi metodo
+
+## Bucle for...in
+Para iterar sobre cada clave usamos un for in loop porque no hay index numerico
+
+for(var clave in miObjeto){
+	console.log(clave)
+	console.log(miObjeto[clave])
+}
+// userman
+// “lucas.macchi”
+//  contraseña
+//  78956
+//  esPremiun
+//  true
+//miMetodo
+
+## Palabra clave this
+
+Los objetos tienen una palabra clave autoreferencial, cuando se llama dentro de un objeto, se refiere a ese mismo objeto. 
+This spuede usarse para acceder a otras claves en el mismo objeto y es especialemente util en metodos
+
+cons miObjeto {
+	username: “lucas.macchi”,
+	contraseña: 78956,
+	esPremiun: true.
+	
+
+	miMetodo: function() { console.log("Mi username es "+this.username) }
+};
+La palabra this es mas complejo pero esto es lo basico.
+
+## Contexto global inicial
+
+En este contexto cuando ejecutamos this fuera de cualquier funcion, hara referencia al objeto global 
+
+## En contexto de una funcion
+Cuando estamos dentro de una funcion, el valor de this va a depender de como esa evocada la funcion
+
+## Como metodo de un objeto
+
+This hara referencia al objeto sobre el cual se llamo el metodo.
+
+> var o = {
+    prop: 37,
+    f: function() {
+      return this.prop;
+    }
+  };
+
+> console.log(o.f());
+< 37
+
+En este caso, *no depende* donde hayamos definido la función, lo único que importa es que la función haya sido invocada como método de un objeto. 
+Por ejemplo, si definimos la función afuera:
+
+> var o = {prop: 37};
+
+// declaramos la función
+> function loguea() {
+    return this.prop;
+  }
+
+//agregamos la función como método del objeto `o`
+> o.f = loguea;
+
+> console.log(o.f());
+< 37
+// el resultado es le mismo!
+
+### Clases
+
+Plantilla para objetos
+
+## Class e instanciacion pseudo-clasica
+
+Creacion de clase:
+
+function Auto(marca) {
+	this.marca = marca;
+	this.arrancar = function() { return this.marca+“ arrancado” }
+}
+
+instanciacion
+
+const peugeot-3008 = new Auto(“peugot”);
+const toyota-hilux = new Auto(“toyota”);
+
+console.log(toyota-hilux.arrancar() ) //toyota arrancado 
+
+### Prototype
+
+Sabiendo que las funciones son costosas en recursos, se puede usar prototype para dar metodos a las clases sin necesidad de ocupar tantos recursos, 
+cada clase tiene una prodiedad prototype
+
+function Auto(marca) {
+	this.marca = marca;
+}
+Ahora le asignamos un metodo con prototype
+
+Auto.prototype.arrancar = function () {
+	return this.marca+“ arrancado”
+}
+
+const toyota-hilux = new Auto(“toyota”);
+
+console.log(toyota-hilux.arrancar() ) //toyota arrancado 
+
+Prototype tiene acceso a “this” y al igual que antes, este apunta al objeto
+
+### Object.create
+Otra forma de crear un objeto, nos permite crear uno a partir de un prototype especificado
+
+//Creo un objeto con un objeto vacio
+var obj = Object.create ( {} )
+// creo un objeto a partir de un proto de Objeto
+> var obj = Object.create(Object.prototype)
+// que es lo mismo que crear un objeto vacio literal
+> var obj = {}
+### Object.assign
+Permite agregar propiedades a un objeto pasado por parametro
+
+var obj = {}
+
+// No hace falta guardar el resultado porque los objetos se pasan por `referencia`
+> Object.assign(obj, {nombre:'Emi', apellido:'Chequer'})
+
+> obj.nombre
+< 'Emi' 
+
+### Herencia Clasica
+
+bruh

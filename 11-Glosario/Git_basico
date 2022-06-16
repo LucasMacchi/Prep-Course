@@ -1,0 +1,238 @@
+### Comandos Basicos de Terminal:
+
+“List” Este nos deja ver en contenido de la carpeta en donde nos encontramos
+$ ls 
+
+“Change Directory” Nos permite movernos a una carpeta 
+$ cd [capeta]
+
+“Make Directory” Crean una carpeta en el directorio que nos encontramos
+$ mkdir [nombre de la carpeta]
+
+“Touch” crea un nuevo archivo
+$ touch [nombre del archivo] 
+
+“Remove” Elimina permanentemente un archivo (este no va a la papelera) (no funciona con carpetas)
+$ rm [nombre del archivo]
+
+### Clonar un repositorio
+Necesitaras el URL del repositorio y podras clonarla desde la terminal
+$ git clone [direccion copiada]
+
+### Como realizar un commit en git:
+
+1. Modificas parte del codigo
+
+2, Pondras en la terminal: “git status” deberia salir que se modifico
+
+3, Pones despues “git add (direccion del archivo modificado que esta en rojo)” 
+
+4, Pones “git status” devuelta y se agrego al historial de git
+
+5, Para confirmar los cambios pones “git commit -m “(mensaje que quieres dejar)””
+
+6, Una vez confiramados, para aplicar al repositorio pones “git push”
+
+### Mas Comandos basico
+
+$ git init	Se utiliza para iniciar nuestro repositorio
+
+$ git add archivoEjemplo.js	Crea el archivo pero no lo guarda de forma definitiva, lo almacena en (Staging Area)
+
+$ git commit -m “version 1”	Aqui se generan cambios de “Staging Area” y con (-m “ “) se deja un mensaje que nos sea util
+
+$ git add	Agrega los archivos actualizados al repositorio, pero unicamente en la carpeta que te encuentras
+
+$ git status	Sirve para revisar si has modificado o guardado los cambios hechos
+
+$ git log “archivo.txt”	Sirve para ver el historial del archivo
+
+$ git push	Sirve para enviar cambios al repositorio remoto
+
+$ git pull	Sirve para recibir cambios de repositorio remoto o local
+
+### Estados de los Archivos en Git
+
+Los archicos pueden estar en 4 diferentes estados (pueden ser mas pero por ahora 4)
+
+**Tracked**: Son archivos que viven dentro de Git, no tienen cambios pendientes y sus ultimas actualizaciones han sido guardadas en el repositorio gracias a los comandos git add y gir commit
+
+**Staged**: Son archivos en staging. Viven dentro de Git y hay registros de ellos porque han sido afectados por el comando git add, aunque no sus 				ultimos cambios. Git sabe de la existencia de estos ultimos cambios, pero todavia no han sido guardados definitivamente en el repositorio por que falta ejecutar el git commit
+
+**Unstagged**: Seria archivos “tracked pero unstaged”. Esots viven dentro de Git pero no han sido afectados por el comando git add ni mucho menos por 				git commit. Git tiene un registro de estos archivos, pero esta desactualizado, sus ultimas versiones solo estan guardadas en su disco duro.
+
+**Untracked**: Son archivos que no viven dentro de Git, solo en el disco duro. Git no tiene registro de los mismos porque nunca fueron afectados por un git add.
+
+Es muy raro que un archivo este en dos estados al mismo tiempo: 
+Staged y Untracked: Esto pasa cuando guardas los cambios de un archivo en el area de staging (con git commit), pero antes de hacer el commit para guardar, haces nuevos cambios que todavia no han sido guardados en el area de staging
+
+## Comandos para mover archivos entre los estados de Git
+
+$ git status: Nos permite ver el estado de nuestros archivos
+
+$ git add: Nos ayuda a mover archivos del untracked o unstaged al estado staged. Podemos usar git nombre del archivo o carpeta  para añadir archivos y carpetas individuales o 
+git add -a para mover todos los archivos de nuestro proyecto (tanto untrackeds como unstageds)
+
+$ git reset HEAD: Nos ayuda a sacar los archivos del estado staged para devolverlos a su estado anterior. Si los archivos venian de unstaged, vuelven alli. Y lo mismo si venian de untracked.
+
+$ git commit: Nos ayuda a mover archivos de Unstaged a tracked. Esta es uina ocacion especial, los cambios que hicimos y podemos usar el argumento -m para describirlo 
+(git commit -m “mensaje”)
+
+$ git rm: Este comando necesita algunos de los argumentos para poder ejecutarse correctamente:
+
+    $ git rm –cached: Mueve los archivos que le indiquemos al estado untracked
+
+    $ git rm –forced:  Elimina los archivos de Git y del disco duro. Git guarda el registro de la existencia de los archivos, por lo que podremos recuperarlos si es necesario (pero debemos usar comandos mas avanzados)
+
+### Que es un Brach y como funciona un Merge
+
+Checkout es para cambiar de rama. Solo la crea con el modificador -b
+Unir dos ramas lo conocemos como Merge
+
+Estandar de equipos de desarrollo:
+	-Rama **Master** o **Main**: va a produccion
+	-Rama **Development** : se aloja las nuevas features, caracteristicas y experimentos
+		-(Para unirse al Master cuando esten definitivamente listas)
+	-Rama **hotfix**: problemas o errores se solucionan aquí para unirse al Master tan pronto posible
+	
+### Iniciar un repositorio 
+
+Debemos posicionarnos en la carpeta que queremos crear el repositorio y escribimos “git init” este creara un repositorio con el nombre “.git” Podemos darle informacion sobre el dueño del repositorio
+
+$ git config --global user.name “tu nombre”
+$ git config --global user.email “tu@email.com”
+
+### Analizar cambios en los archivos de tu proyecto
+
+    $ git log => Muestra la indentificacion de los commits
+
+    $ git show => Nos muestra los cambios que han existido sobre un archivo y es muy util para detectar cuando se produjeron ciertos cambios, que se rompio y como lo podemos solucionar. Pero podemos ser mas detallados.
+
+    $ git diff => Nos muestra la diferencia entre una version y otra, no necesariamente todos los cambios desde la creaccion (Git diff commitA commitB)
+
+### Reset y Checkout
+
+    $ git checkout + Id del commit
+    Podemos volver a cualquier version anterior de un archivo especifico o incluso de nuestro proyecto entero. Esta tambien es la forma de movernos entre ramas.
+
+    $ git log --stat
+    Commit descriptivo con cantidad de lineas agregadas y removidas por un archivo
+
+    $ git reset --soft “commit”
+    Mantiene los archivos en el area de staging para que podamos aplicar nuestros ultimos cambios desde un commmit anterior
+
+    $ git reset --hard “commit” 
+    Borra toda la informacion que tengamos en el aerea de Staging (Perdiendo todo para siempre)
+
+    $ git checkout master “archivo.txt” 
+    Volvemos a la version madre
+
+### Ramas o Branches
+Las ramas son las formas de hacer cambios en nuestro proyecto sin afectar el flujo de trabajo de la rama principal. Esto porque queremos trabajar una parte muy especifica de la aplicación o simplemente experimentar.
+La cabecera o head representan la rama y el commit de esa rama donde estamos trabajando. Por defecto, esta cabecera aparecera en el ultimo commit de nuestra rama principal. Pero podemos cambiarlo al crear una rama (git branch rama, git checkout -b rama) o movernos en el tiempo a cualquier otro commit de cualquier otra rama con los comandos (git reset id-commit, git checkout rama-o-id-commit).
+
+$ git brach “nombre de rama” // crear rama
+$ git checkout “nombre de rama” // cambiarse de rama
+
+**NOTA** Hacer commit antes de cambiar de rama para no perder los datos.
+
+### Fucion de Ramas con git Merge
+El comando git merge nos permite crear un nuevo commit con la combinacion de dos ramas, la rama donde nos encontramos cuando ejecutamos el comando y la rama que le pasamos despues del comando.
+
+    $ git merge “cualquier otra rama”
+
+### Resolucion de confluctos al hacer un merge
+Git nunca borra nada a menos que se lo indiquemos. Cuando usamos los comandos git merge o git checkout estamos cambiando de rama pero creando un nuevo commit, no borrando ramas ni commits (recuerda que puedes borrar commits, git reset / git brach -d)
+
+Los archivos con conflictos por el comando git merge entran en un nuevo estado que conocemos como ***Unmerged***.
+Funcionan parecido a los archivos en estado ***Unstaged***, algo asi como un estado intermedio entre ***Untracked*** y ***Unstaged***, solo debemos ejecutar git add para pasarlos al aera de ***Staging*** y git commit para aplicar los cambios en el repositorio.
+
+### Uso de GitHub
+
+Github es una plataforma que nos permite guardar repositorios de git que podemos usar como servidores remotos y ejecutar algunos comandos de forma visual e interactiva (sin necesidad de consola de mandos).
+
+Luego de crear nuestra cuenta, podemos crear o importar repositorios, crear organizadores y proyectos de trabajo, descubrir respositorios de otras personas, contribuir a esos proyectos, dar estrellas y muchas otras cosas.
+
+El Readme.md es el archivo que veremos por defecto al entrar en un repositorio. Es una muy buena práctica configurarlo para describir el proyecto, los requerimientos y las instrucciones que debemos seguir para contribuir correctamente.
+
+Para clonar un repositorio desde GitHub (o cualquier otro servidor remoto) debemos copiar el URL (por ahora, usando HTTPS) y ejecutar el comando git clone + la URL que acabamos de copiar. Esto descargara la versión de nuestro proyecto que se encuentra en GitHub.
+
+Sin embargo, esto solo funciona para las personas que quieren empezar a contribuir en el proyecto. Si queremos conectar el repositorio de GitHub con nuestro repositorio local, el que creamos con git init, debemos ejecutar las siguientes instrucciones:
+
+***Primero*** Guardar la URL del repositorio de GitHub con el nombre de origin
+    $ git remote add origin <URL>
+
+***Segundo***Verificar que la URL se haya guardado correctamente
+    $ git remote
+    $ git remote -v
+
+***Tercero*** Traer la versión del repositorio remoto y hacer merge para crear un commit con los archivos de ambas partes. Podemos usar git fetch y git merge o solo  git pull con el flag –allow-unrelated-histories:
+ $ git pull origin master--allow--unrelated--histories 
+
+***Cuarto y ultimo*** Ahora si podemos hacer git push para guardar los cambios de nuestro repositorio local en github
+
+ $ git push origin master
+
+### Manejos de ramas en Github
+
+Puedes trabajar con ramas que nunca enviamos a GitHub, así como pueden haber ramas importantes en GitHub que nunca usas en el repositorio local. Lo importante es que aprendas a manejarlas para trabajar profesionalmente.
+
+***Crear ramas en la repo local***
+
+ $ git brach “nombre de la rama”
+ o
+ $ git checkout -b “nombre de la rama”
+
+***Publicar rama local, al repo remoto**
+ $ git push origin “nombre de la rama”
+
+Recuerda que podemos ver graficamente nuestro entrono y flujo de trabajo local con Git usando el comando gitk
+
+#### Configurar múltiples colaboradores en un repositorio de GitHub
+
+Por defecto, cualquiera puede clonar o descargar tu proyecto desde GitHub, pero no pueden crear commits, ni ramas ni nada.
+
+Existen varias formas de solucionar esto para poder aceptar contribuciones. Una de ellas es añadir a cada persona de nuestro equipo como colaborador de nuestro repositorio.
+
+Solo debemos entrar a la configuración de colaboradores de nuestro proyecto (Repositorio > Settings > Collaborators) y añadir el email o username de los nuevos colaboradores.
+
+#### Flujo de trabajo profesional con ***pull requests***
+
+En un entorno profesional normalmente se bloquea la rama master, y para enviar código a dicha rama pasa por un code review y luego de su aprobación se unen códigos con los llamados merge request.
+
+Para realizar pruebas enviamos el código a servidores que normalmente los llamamos Staging develop (servidores de pruebas) luego de que se realizan las pruebas pertinentes tanto de código como de la aplicación estos pasan a el servidor de producción con el ya antes mencionado merge request.
+
+#### Ignorar archivos en el Repositorio con ***.gitignore***
+
+No todos los archivos que agregas a un proyecto deberían ir a un repositorio, por ejemplo cuando tienes un archivo donde están tus contraseñas que comúnmente tienen la extensión ***.env*** o cuando te estas conectando a una base de datos, son archivos que nadie debe ver.
+
+#### Reconstruir commits en Git con ***amend***
+
+A veces hacemos un commit, pero resulta que no queríamos mandarlo porque faltaba algo más. Utilizamos `git commit --amend`, amend en inglés es remendar y lo que hará es que los cambios que hicimos nos los agrega al commit anterior.
+
+
+
+#### Git ***reset*** y ***reflog***: úsese en caso de emergencia
+
+¿Qué pasa cuando todo se rompe y no sabemos qué está pasando?
+
+Con git reset hashDelHEAD nos devolvemos al estado en que el proyecto funcionaba.
+
+$ git reset --soft <hashDelHEAD> te mantiene lo que tengas en Staging ahí.
+$ git reset --hard <hashDelHEAD> resetea absolutamente todo incluyendo lo que tengas en Staging.
+
+Git reset es una mala práctica, no deberías usarlo en ningún momento; debe ser nuestro último recurso.
+
+#### Buscar en archivos y commits de Git con ***grep*** y ***log***
+
+A medida que nuestro proyecto se hace grande vamos a querer buscar ciertas cosas.
+
+Por ejemplo: ¿Cuántas veces en nuestro proyecto utilizamos la palabra color?
+
+Para buscar utilizamos el comando git grep color y nos buscará en todo el proyecto los archivos en donde está la palabra color.
+
+**Con git grep -n color** nos saldrá un output el cual nos dirá en que línea está lo qué estamos buscando.
+**Con git grep -c color** nos saldrá un output el cual nos dirá cuantas veces se repite esa palabra y en qué archivo.
+
+Si queremos buscar cuántas veces utilizamos un atributo de HTML lo hacemos con 
+**git grep -c "atributo"**.
